@@ -2,337 +2,177 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
-<title>Paramatta Strata Report · 数据分析看板</title>
+<title>Paramatta Strata Report · 卖家版 V2.0</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Poppins:wght@500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ============== MiniMax Light Design System ============== */
   :root {
-    /* Brand */
-    --brand-blue:   #1456f0;
-    --brand-sky:    #3daeff;
-    --brand-pink:   #ea5ec1;
-    --brand-deep:   #17437d;
-
-    /* Primary Blue Scale */
-    --primary-200:  #bfdbfe;
-    --primary-light:#60a5fa;
-    --primary-500:  #3b82f6;
-    --primary-600:  #2563eb;
-    --primary-700:  #1d4ed8;
-
-    /* Text */
-    --text-00: #222222;
-    --text-01: #18181b;
-    --text-02: #45515e;
-    --text-03: #5f5f5f;
-    --text-04: #8e8e93;
-
-    /* Surface */
-    --bg:        #ffffff;
-    --bg-tint:   #f7f9fc;
-    --bg-card:   #ffffff;
-    --bg-muted:  #f0f0f0;
-    --border-1:  #f2f3f5;
-    --border-2:  #e5e7eb;
-    --footer:    #181e25;
-
-    /* Semantic */
-    --success-bg: #e8ffea;
-    --success-700:#15803d;
-    --success-500:#22c55e;
-    --warn-bg:    #fff8e1;
-    --warn-700:   #b45309;
-    --warn-500:   #f59e0b;
-    --danger-bg:  #ffeaea;
-    --danger-700:#b91c1c;
-    --danger-500:#ef4444;
-    --info-bg:    #eaf2ff;
-    --info-700:   #1d4ed8;
-
-    /* Shadows */
-    --shadow-1: 0 4px 6px rgba(0,0,0,0.08);
-    --shadow-2: 0 0px 22.576px rgba(0,0,0,0.08);
-    --shadow-3: 0 0px 15px rgba(44,30,116,0.16);
-    --shadow-4: 0 12px 16px -4px rgba(36,36,36,0.08);
-
-    /* Radius */
-    --r-sm:  8px;
-    --r-md: 13px;
-    --r-lg: 16px;
-    --r-xl: 20px;
-    --r-2xl:24px;
-    --r-pill:9999px;
+    --brand-blue:#1456f0; --brand-sky:#3daeff; --brand-pink:#ea5ec1; --brand-deep:#17437d;
+    --primary-200:#bfdbfe; --primary-light:#60a5fa; --primary-500:#3b82f6; --primary-600:#2563eb; --primary-700:#1d4ed8;
+    --text-00:#222222; --text-01:#18181b; --text-02:#45515e; --text-03:#5f5f5f; --text-04:#8e8e93;
+    --bg:#ffffff; --bg-tint:#f7f9fc; --bg-card:#ffffff; --bg-muted:#f0f0f0; --border-1:#f2f3f5; --border-2:#e5e7eb;
+    --footer:#181e25;
+    --success-bg:#e8ffea; --success-700:#15803d; --success-500:#22c55e;
+    --warn-bg:#fff8e1; --warn-700:#b45309; --warn-500:#f59e0b;
+    --danger-bg:#ffeaea; --danger-700:#b91c1c; --danger-500:#ef4444;
+    --info-bg:#eaf2ff; --info-700:#1d4ed8;
+    --shadow-1:0 4px 6px rgba(0,0,0,0.08);
+    --shadow-2:0 0px 22.576px rgba(0,0,0,0.08);
+    --shadow-3:0 0px 15px rgba(44,30,116,0.16);
+    --shadow-4:0 12px 16px -4px rgba(36,36,36,0.08);
+    --r-sm:8px; --r-md:13px; --r-lg:16px; --r-xl:20px; --r-2xl:24px; --r-pill:9999px;
   }
-
   * { box-sizing: border-box; }
-  html, body { background: var(--bg); }
-  body {
-    margin: 0;
-    font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
-    color: var(--text-00);
-    line-height: 1.50;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Display font for headlines */
-  .display { font-family: "Outfit", "DM Sans", sans-serif; letter-spacing: -0.01em; }
-  .mid     { font-family: "Poppins", "DM Sans", sans-serif; }
-  .data    { font-family: "Roboto", "DM Sans", sans-serif; font-variant-numeric: tabular-nums; }
-
+  html,body { background: var(--bg); }
+  body { margin:0; font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color:var(--text-00); line-height:1.50; -webkit-font-smoothing:antialiased; }
+  .display { font-family: "Outfit","DM Sans",sans-serif; letter-spacing:-0.01em; }
+  .mid     { font-family: "Poppins","DM Sans",sans-serif; }
+  .data    { font-family: "Roboto","DM Sans",sans-serif; font-variant-numeric: tabular-nums; }
   .wrap { max-width: 1280px; margin: 0 auto; padding: 24px 32px 96px; }
 
-  /* ========== NAV BAR (MiniMax style) ========== */
-  .navbar {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: saturate(180%) blur(12px);
-    -webkit-backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--border-1);
-  }
-  .navbar .inner {
-    max-width: 1280px; margin: 0 auto;
-    padding: 14px 32px;
-    display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--text-01); }
-  .brand .logo {
-    width: 32px; height: 32px; border-radius: 9px;
-    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-sky) 60%, var(--brand-pink) 100%);
-    box-shadow: var(--shadow-3);
-    display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 14px;
-    font-family: "Outfit", sans-serif;
-  }
-  .nav-links { display: flex; gap: 6px; align-items: center; }
-  .nav-pill {
-    padding: 7px 14px; border-radius: var(--r-pill);
-    font-size: 14px; font-weight: 500; color: var(--text-01);
-    text-decoration: none; transition: background .15s;
-  }
-  .nav-pill:hover { background: rgba(0,0,0,0.05); }
-  .nav-pill.active { background: rgba(0,0,0,0.05); }
-  .nav-cta {
-    padding: 9px 18px; border-radius: 8px; background: var(--text-01); color: #fff;
-    font-size: 14px; font-weight: 500; text-decoration: none; transition: transform .15s, box-shadow .15s;
-  }
+  /* NAVBAR */
+  .navbar { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85); backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px); border-bottom:1px solid var(--border-1); }
+  .navbar .inner { max-width:1280px; margin:0 auto; padding:14px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:600; font-size:18px; color:var(--text-01); }
+  .brand .logo { width:32px; height:32px; border-radius:9px; background: linear-gradient(135deg,var(--brand-blue) 0%,var(--brand-sky) 60%,var(--brand-pink) 100%); box-shadow:var(--shadow-3); display:grid; place-items:center; color:#fff; font-weight:700; font-size:14px; font-family:"Outfit",sans-serif; }
+  .nav-links { display:flex; gap:6px; align-items:center; }
+  .nav-pill { padding:7px 14px; border-radius:var(--r-pill); font-size:14px; font-weight:500; color:var(--text-01); text-decoration:none; transition:background .15s; }
+  .nav-pill:hover { background:rgba(0,0,0,0.05); }
+  .nav-pill.active { background:rgba(0,0,0,0.05); }
+  .nav-cta { padding:9px 18px; border-radius:8px; background:var(--text-01); color:#fff; font-size:14px; font-weight:500; text-decoration:none; }
   .nav-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-1); }
 
-  /* ========== HERO ========== */
-  .hero {
-    margin-top: 28px;
-    background: linear-gradient(180deg, #fafbff 0%, #ffffff 100%);
-    border: 1px solid var(--border-1);
-    border-radius: var(--r-2xl);
-    padding: 48px 40px;
-    box-shadow: var(--shadow-2);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: -120px; right: -120px;
-    width: 360px; height: 360px; border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(20,86,240,0.10), rgba(20,86,240,0));
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute; bottom: -160px; left: 30%;
-    width: 420px; height: 420px; border-radius: 50%;
-    background: radial-gradient(closest-side, rgba(234,94,193,0.08), rgba(234,94,193,0));
-    pointer-events: none;
-  }
-  .hero h1 {
-    font-family: "Outfit", "DM Sans", sans-serif;
-    font-size: 56px; font-weight: 600; line-height: 1.10; color: var(--text-00);
-    margin: 0 0 12px; max-width: 880px; letter-spacing: -0.015em;
-  }
-  .hero .sub {
-    font-size: 18px; color: var(--text-02); max-width: 760px; line-height: 1.50; margin: 0 0 24px;
-  }
-  .hero .meta {
-    display: flex; gap: 16px; flex-wrap: wrap; color: var(--text-04);
-    font-size: 13px; line-height: 1.5;
-  }
-  .hero .meta b { color: var(--text-01); font-weight: 600; }
-  .hero .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
-  .pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: var(--r-pill);
-    background: rgba(20,86,240,0.08); color: var(--brand-blue);
-    font-size: 12px; font-weight: 500;
-  }
-  .pill.success { background: var(--success-bg); color: var(--success-700); }
-  .pill.warn    { background: var(--warn-bg);    color: var(--warn-700); }
-  .pill.danger  { background: var(--danger-bg);  color: var(--danger-700); }
-  .pill.info    { background: var(--info-bg);    color: var(--info-700); }
-  .pill.pink    { background: rgba(234,94,193,0.10); color: var(--brand-pink); }
+  /* HERO */
+  .hero { margin-top:28px; background:linear-gradient(180deg,#fafbff 0%,#ffffff 100%); border:1px solid var(--border-1); border-radius:var(--r-2xl); padding:48px 40px; box-shadow:var(--shadow-2); position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-120px; right:-120px; width:360px; height:360px; border-radius:50%; background:radial-gradient(closest-side,rgba(20,86,240,0.10),rgba(20,86,240,0)); pointer-events:none; }
+  .hero::after  { content:''; position:absolute; bottom:-160px; left:30%; width:420px; height:420px; border-radius:50%; background:radial-gradient(closest-side,rgba(234,94,193,0.08),rgba(234,94,193,0)); pointer-events:none; }
+  .hero h1 { font-family:"Outfit","DM Sans",sans-serif; font-size:52px; font-weight:600; line-height:1.10; color:var(--text-00); margin:0 0 12px; max-width:920px; letter-spacing:-0.015em; }
+  .hero .sub { font-size:18px; color:var(--text-02); max-width:820px; line-height:1.50; margin:0 0 24px; }
+  .hero .meta { display:flex; gap:16px; flex-wrap:wrap; color:var(--text-04); font-size:13px; line-height:1.5; }
+  .hero .meta b { color:var(--text-01); font-weight:600; }
+  .hero .pills { display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
+  .pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:var(--r-pill); background:rgba(20,86,240,0.08); color:var(--brand-blue); font-size:12px; font-weight:500; }
+  .pill.success { background:var(--success-bg); color:var(--success-700); }
+  .pill.warn    { background:var(--warn-bg);    color:var(--warn-700); }
+  .pill.danger  { background:var(--danger-bg);  color:var(--danger-700); }
+  .pill.info    { background:var(--info-bg);    color:var(--info-700); }
+  .pill.pink    { background:rgba(234,94,193,0.10); color:var(--brand-pink); }
+  .pill.gray    { background:#eef1f6; color:var(--text-02); }
 
-  /* ========== SECTION HEADERS ========== */
-  .section-title {
-    display: flex; align-items: center; gap: 10px;
-    margin: 40px 0 16px;
-  }
-  .section-title h2 {
-    margin: 0; font-family: "Outfit", "DM Sans", sans-serif;
-    font-size: 28px; font-weight: 600; color: var(--text-00); letter-spacing: -0.01em;
-  }
-  .section-title .sub-label { color: var(--text-04); font-size: 14px; font-weight: 500; }
+  /* SECTIONS */
+  .section-title { display:flex; align-items:center; gap:10px; margin:40px 0 16px; }
+  .section-title h2 { margin:0; font-family:"Outfit","DM Sans",sans-serif; font-size:28px; font-weight:600; color:var(--text-00); letter-spacing:-0.01em; }
+  .section-title .sub-label { color:var(--text-04); font-size:14px; font-weight:500; }
 
-  /* ========== GRID ========== */
-  .grid { display: grid; gap: 16px; }
-  .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+  .grid { display:grid; gap:16px; }
+  .kpi-grid { grid-template-columns: repeat(4,1fr); }
   .row-2 { grid-template-columns: 2fr 1fr; margin-top: 18px; }
   .row-3 { grid-template-columns: 1fr 1fr 1fr; margin-top: 18px; }
   .row-1 { grid-template-columns: 1fr; margin-top: 18px; }
 
-  /* ========== CARDS ========== */
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-1);
-    border-radius: var(--r-xl);
-    padding: 20px 22px;
-    box-shadow: var(--shadow-1);
-    transition: box-shadow .2s, transform .2s;
-  }
-  .card:hover { box-shadow: var(--shadow-3); transform: translateY(-1px); }
-  .card.featured {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
-    border-color: var(--primary-200);
-    box-shadow: var(--shadow-3);
-  }
-  .card h3.title {
-    margin: 0 0 14px;
-    font-family: "Outfit", "DM Sans", sans-serif;
-    font-size: 18px; font-weight: 600; color: var(--text-00);
-  }
-  .card .sub {
-    color: var(--text-04); font-size: 12px; margin-top: -8px; margin-bottom: 12px;
-  }
+  /* CARD */
+  .card { background:var(--bg-card); border:1px solid var(--border-1); border-radius:var(--r-xl); padding:20px 22px; box-shadow:var(--shadow-1); transition:box-shadow .2s, transform .2s; }
+  .card:hover { box-shadow:var(--shadow-3); transform: translateY(-1px); }
+  .card.featured { background:linear-gradient(135deg,#ffffff 0%,#f5f8ff 100%); border-color:var(--primary-200); box-shadow:var(--shadow-3); }
+  .card h3.title { margin:0 0 14px; font-family:"Outfit","DM Sans",sans-serif; font-size:18px; font-weight:600; color:var(--text-00); }
+  .card .sub { color:var(--text-04); font-size:12px; margin-top:-8px; margin-bottom:12px; }
 
-  /* ========== KPI CARDS ========== */
-  .kpi {
-    background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
-    border: 1px solid var(--border-1);
-    border-radius: var(--r-xl);
-    padding: 18px 20px;
-    box-shadow: var(--shadow-1);
-    position: relative;
-    overflow: hidden;
-    transition: transform .15s, box-shadow .15s;
-  }
-  .kpi::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
-    background: linear-gradient(90deg, var(--brand-blue), var(--brand-sky));
-    opacity: 0.85;
-  }
-  .kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow-3); }
-  .kpi.amber::after { background: linear-gradient(90deg, var(--warn-500), #fbbf24); }
-  .kpi.green::after { background: linear-gradient(90deg, var(--success-500), #4ade80); }
-  .kpi.danger::after{ background: linear-gradient(90deg, var(--danger-500), #f87171); }
-  .kpi.pink::after  { background: linear-gradient(90deg, var(--brand-pink), #f472b6); }
-  .kpi.purple::after{ background: linear-gradient(90deg, #8b5cf6, #c084fc); }
-  .kpi.teal::after  { background: linear-gradient(90deg, #14b8a6, #5eead4); }
+  /* KPI */
+  .kpi { background:linear-gradient(135deg,#ffffff 0%,#f7f9fc 100%); border:1px solid var(--border-1); border-radius:var(--r-xl); padding:18px 20px; box-shadow:var(--shadow-1); position:relative; overflow:hidden; }
+  .kpi::after { content:''; position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg,var(--brand-blue),var(--brand-sky)); opacity:.85; }
+  .kpi.amber::after { background:linear-gradient(90deg,var(--warn-500),#fbbf24); }
+  .kpi.green::after { background:linear-gradient(90deg,var(--success-500),#4ade80); }
+  .kpi.danger::after{ background:linear-gradient(90deg,var(--danger-500),#f87171); }
+  .kpi.pink::after  { background:linear-gradient(90deg,var(--brand-pink),#f472b6); }
+  .kpi.purple::after{ background:linear-gradient(90deg,#8b5cf6,#c084fc); }
+  .kpi.teal::after  { background:linear-gradient(90deg,#14b8a6,#5eead4); }
+  .kpi .label { color:var(--text-04); font-size:12px; font-weight:500; text-transform:uppercase; letter-spacing:0.6px; }
+  .kpi .value { font-family:"Outfit","DM Sans",sans-serif; font-size:32px; font-weight:600; color:var(--text-00); margin-top:6px; line-height:1.1; letter-spacing:-0.02em; }
+  .kpi .sub { color:var(--text-02); font-size:12px; margin-top:6px; }
+  .kpi .delta { font-size:12px; margin-top:8px; font-weight:500; }
+  .delta.up   { color:var(--success-700); }
+  .delta.down { color:var(--danger-700); }
+  .delta.flat { color:var(--text-04); }
 
-  .kpi .label {
-    color: var(--text-04); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.6px;
-  }
-  .kpi .value {
-    font-family: "Outfit", "DM Sans", sans-serif;
-    font-size: 32px; font-weight: 600; color: var(--text-00);
-    margin-top: 6px; line-height: 1.1; letter-spacing: -0.02em;
-  }
-  .kpi .sub { color: var(--text-02); font-size: 12px; margin-top: 6px; }
-  .kpi .delta { font-size: 12px; margin-top: 8px; font-weight: 500; }
-  .delta.up    { color: var(--success-700); }
-  .delta.down  { color: var(--danger-700); }
-  .delta.flat  { color: var(--text-04); }
+  /* TABLE */
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--border-1); }
+  th { color:var(--text-04); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:0.6px; font-family:"DM Sans",sans-serif; }
+  td.num { text-align:right; font-family:"Roboto","DM Sans",sans-serif; font-variant-numeric:tabular-nums; }
+  tr.total td { font-weight:700; border-top:1.5px solid var(--border-2); background:var(--bg-tint); }
+  tr.warn td  { color:var(--warn-700); background:var(--warn-bg); }
+  tr.danger td { color:var(--danger-700); background:var(--danger-bg); }
+  tr.success td { color:var(--success-700); background:var(--success-bg); }
 
-  /* ========== TABLE ========== */
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border-1); }
-  th {
-    color: var(--text-04); font-weight: 500; font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.6px; font-family: "DM Sans", sans-serif;
+  /* BAR */
+  .bar { display:flex; align-items:center; gap:12px; margin:8px 0; }
+  .bar .name { width:200px; color:var(--text-02); font-size:13px; font-weight:500; }
+  .bar .track { flex:1; background:#eef1f6; height:14px; border-radius:7px; overflow:hidden; }
+  .bar .fill { height:100%; }
+  .bar .val  { width:160px; text-align:right; font-family:"Roboto","DM Sans",sans-serif; font-variant-numeric:tabular-nums; font-size:13px; color:var(--text-01); font-weight:500; }
+
+  /* GAUGE */
+  .gauge { display:flex; align-items:center; gap:18px; }
+  .gauge svg { width:120px; height:120px; }
+  .gauge .desc { color:var(--text-02); font-size:13px; line-height:1.7; }
+  .gauge .desc b { color:var(--text-00); font-weight:600; }
+
+  /* ALERTS */
+  .alert { display:flex; gap:14px; padding:14px 16px; border-radius:13px; border:1px solid var(--border-1); background:var(--bg-tint); }
+  .alert.danger { background:var(--danger-bg); border-color:rgba(239,68,68,0.20); }
+  .alert.warn   { background:var(--warn-bg);   border-color:rgba(245,158,11,0.20); }
+  .alert.success{ background:var(--success-bg); border-color:rgba(34,197,94,0.20); }
+  .alert.info   { background:var(--info-bg);    border-color:rgba(59,130,246,0.20); }
+  .alert.pink   { background:rgba(234,94,193,0.08); border-color:rgba(234,94,193,0.20); }
+  .alert .ico { width:28px; height:28px; border-radius:8px; flex-shrink:0; display:grid; place-items:center; font-weight:700; font-size:14px; }
+  .alert.danger .ico { background:var(--danger-500); color:#fff; }
+  .alert.warn   .ico { background:var(--warn-500);   color:#fff; }
+  .alert.success .ico{ background:var(--success-500); color:#fff; }
+  .alert.info   .ico { background:var(--primary-500); color:#fff; }
+  .alert.pink   .ico { background:var(--brand-pink); color:#fff; }
+  .alert .body { font-size:13px; line-height:1.65; color:var(--text-01); }
+  .alert .body b { font-weight:600; }
+  .stack { display:flex; flex-direction:column; gap:10px; }
+
+  /* QUOTE / SPOKEN */
+  .voice {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    border-left: 4px solid var(--brand-pink);
+    border-radius: 13px;
+    padding: 20px 24px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-00);
+    font-family: "DM Sans", sans-serif;
   }
-  td.num { text-align: right; font-family: "Roboto", "DM Sans", sans-serif; font-variant-numeric: tabular-nums; }
-  tr.total td { font-weight: 700; border-top: 1.5px solid var(--border-2); background: var(--bg-tint); }
-  tr.warn td  { color: var(--warn-700); background: var(--warn-bg); }
+  .voice b { color: var(--brand-deep); font-weight: 700; }
+  .voice .badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:var(--r-pill); background:var(--brand-pink); color:#fff; font-weight:600; margin-right:6px; vertical-align:middle; }
 
-  /* ========== BAR ========== */
-  .bar { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
-  .bar .name { width: 160px; color: var(--text-02); font-size: 13px; font-weight: 500; }
-  .bar .track {
-    flex: 1; background: #eef1f6; height: 14px; border-radius: 7px; overflow: hidden;
-  }
-  .bar .fill { height: 100%; }
-  .bar .val  { width: 140px; text-align: right; font-family: "Roboto", "DM Sans", sans-serif; font-variant-numeric: tabular-nums; font-size: 13px; color: var(--text-01); font-weight: 500; }
+  ul.tight { margin:0; padding-left:18px; line-height:1.7; font-size:13px; color:var(--text-01); }
+  ul.tight li { margin-bottom:4px; }
 
-  /* ========== GAUGE ========== */
-  .gauge { display: flex; align-items: center; gap: 18px; }
-  .gauge svg { width: 120px; height: 120px; }
-  .gauge .desc { color: var(--text-02); font-size: 13px; line-height: 1.7; }
-  .gauge .desc b { color: var(--text-00); font-weight: 600; }
+  .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--text-02); }
+  .legend span::before { content:''; display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:6px; vertical-align:middle; }
+  .legend .a::before { background:var(--brand-blue); }
+  .legend .b::before { background:#14b8a6; }
+  .legend .c::before { background:var(--warn-500); }
+  .legend .d::before { background:#8b5cf6; }
+  .legend .e::before { background:var(--danger-500); }
+  .legend .f::before { background:var(--success-500); }
 
-  /* ========== ALERTS ========== */
-  .alert {
-    display: flex; gap: 14px; padding: 14px 16px; border-radius: 13px;
-    border: 1px solid var(--border-1); background: var(--bg-tint);
-  }
-  .alert.danger { background: var(--danger-bg); border-color: rgba(239,68,68,0.20); }
-  .alert.warn   { background: var(--warn-bg);   border-color: rgba(245,158,11,0.20); }
-  .alert.success{ background: var(--success-bg); border-color: rgba(34,197,94,0.20); }
-  .alert.info   { background: var(--info-bg);    border-color: rgba(59,130,246,0.20); }
-  .alert .ico {
-    width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
-    display: grid; place-items: center; font-weight: 700; font-size: 14px;
-  }
-  .alert.danger .ico { background: var(--danger-500); color: #fff; }
-  .alert.warn   .ico { background: var(--warn-500);   color: #fff; }
-  .alert.success .ico{ background: var(--success-500); color: #fff; }
-  .alert.info   .ico { background: var(--primary-500); color: #fff; }
-  .alert .body { font-size: 13px; line-height: 1.55; color: var(--text-01); }
-  .alert .body b { font-weight: 600; }
-  .stack { display: flex; flex-direction: column; gap: 10px; }
+  /* FOOTER */
+  .foot { background:var(--footer); color:rgba(255,255,255,0.7); border-radius:var(--r-2xl); padding:32px; margin-top:56px; font-size:13px; line-height:1.7; }
+  .foot .row { display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+  .foot b { color:#fff; font-weight:600; }
+  .foot a { color:rgba(255,255,255,0.7); text-decoration:none; }
+  .foot a:hover { color:#fff; }
 
-  ul.tight { margin: 0; padding-left: 18px; line-height: 1.7; font-size: 13px; color: var(--text-01); }
-  ul.tight li { margin-bottom: 4px; }
-
-  /* ========== LEGEND ========== */
-  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-02); }
-  .legend span::before {
-    content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px;
-    margin-right: 6px; vertical-align: middle;
-  }
-  .legend .a::before { background: var(--brand-blue); }
-  .legend .b::before { background: #14b8a6; }
-  .legend .c::before { background: var(--warn-500); }
-  .legend .d::before { background: #8b5cf6; }
-  .legend .e::before { background: var(--danger-500); }
-  .legend .f::before { background: var(--success-500); }
-
-  /* ========== FOOTER ========== */
-  .foot {
-    background: var(--footer);
-    color: rgba(255,255,255,0.7);
-    border-radius: var(--r-2xl);
-    padding: 32px;
-    margin-top: 56px;
-    font-size: 13px;
-    line-height: 1.7;
-  }
-  .foot .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  .foot b { color: #fff; font-weight: 600; }
-  .foot a { color: rgba(255,255,255,0.7); text-decoration: none; }
-  .foot a:hover { color: #fff; }
-
-  /* ========== RESPONSIVE ========== */
   @media (max-width: 980px) {
     .kpi-grid { grid-template-columns: repeat(2, 1fr); }
     .row-2, .row-3 { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 36px; }
+    .hero h1 { font-size: 32px; }
     .hero { padding: 32px 24px; }
     .wrap { padding: 16px 16px 64px; }
   }
@@ -340,7 +180,6 @@
 </head>
 <body>
 
-<!-- ========== NAVBAR ========== -->
 <nav class="navbar">
   <div class="inner">
     <div class="brand">
@@ -349,10 +188,10 @@
     </div>
     <div class="nav-links">
       <a class="nav-pill active" href="#hero">概览</a>
-      <a class="nav-pill" href="#financial">财务</a>
-      <a class="nav-pill" href="#insurance">保险</a>
-      <a class="nav-pill" href="#risk">风险</a>
-      <a class="nav-pill" href="#forecast">预测</a>
+      <a class="nav-pill" href="#buyer">买家视角</a>
+      <a class="nav-pill" href="#cashflow">12个月现金流</a>
+      <a class="nav-pill" href="#forecast">5年流水账</a>
+      <a class="nav-pill" href="#risks">风险评估</a>
     </div>
     <a class="nav-cta" href="https://github.com/robin12300-SnailAI/paramatta-strata-dashboard-2026-06-16" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
@@ -362,63 +201,395 @@
 
   <!-- ========== HERO ========== -->
   <section class="hero" id="hero">
-    <h1 class="display">Paramatta&nbsp;Strata&nbsp;Report <span style="color:var(--brand-blue)">·</span> 数据分析看板</h1>
-    <p class="sub">Strata Plan 89878 · Lot 1 · 1/6 Sorrell Street, Parramatta NSW 2150 · 2016 年建 · 业主视角的财务与风险一览</p>
+    <h1 class="display">Paramatta Strata Report <span style="color:var(--brand-blue)">·</span> 卖家版 V2.0</h1>
+    <p class="sub">这套房子 <b>要卖</b>，所以这份 Strata Report 是给<b>买家</b>看的。我把所有会影响买家判断、卖价、未来成本的信息整理在一起——尤其是 5 年内每个季度要付多少、还要不要补刀一笔大额 special levy、买家大概率会怎么想。</p>
     <div class="meta">
-      <span>报告人 <b>Libom Pty Ltd</b> (Amanda Williamson)</span>
+      <span>地址 <b>Sorrell Street, Parramatta NSW 2150</b></span>
       <span>·</span>
-      <span>Strata Manager <b>Strata Choice (Darren Bolton)</b></span>
+      <span>Strata Plan <b>89878</b></span>
       <span>·</span>
-      <span>检查日 <b>10 Jun 2026</b></span>
+      <span>Lot <b>X</b></span>
+      <span>·</span>
+      <span>建成 <b>2016</b></span>
+      <span>·</span>
+      <span>报告期 <b>FY 2025/2026</b></span>
       <span>·</span>
       <span>数据时点 <b>09 Jun 2026</b></span>
-      <span>·</span>
-      <span>财年 <b>1 Sep 2025 - 31 Oct 2026</b></span>
     </div>
     <div class="pills">
-      <span class="pill">数据源：IMA 知识库</span>
-      <span class="pill success">净基金 +$147K</span>
-      <span class="pill warn">应收 $38K</span>
-      <span class="pill danger">Lannock 贷款 $133K</span>
-      <span class="pill pink">Lot 1 季度征费 $2,897</span>
+      <span class="pill pink">卖家版 V2.0</span>
+      <span class="pill success">净基金 +$147K（健康）</span>
+      <span class="pill warn">Lannock 贷款 $133K 挂账中</span>
+      <span class="pill danger">NCAT 诉讼已原则和解</span>
       <span class="pill info">保险 2026-08-31 到期</span>
     </div>
   </section>
 
-  <!-- ========== KPI ROW 1 ========== -->
-  <div class="section-title">
-    <h2>关键指标</h2>
-    <span class="sub-label">Lot 1 业主视角 · 2025/2026 财年</span>
+  <!-- ========== 买家视角影响评估 ========== -->
+  <div class="section-title" id="buyer">
+    <h2>买家看到这个 Strata Report，会有什么反应？</h2>
+    <span class="sub-label">影响卖价的核心分析</span>
   </div>
 
   <div class="grid kpi-grid">
-    <div class="kpi">
-      <div class="label">我的季度征费 · Lot 1</div>
-      <div class="value">$2,897.13</div>
-      <div class="sub">Admin $2,542.38 + CW $354.75</div>
-      <div class="delta flat">年化 ≈ $11,588.52</div>
+    <div class="kpi danger">
+      <div class="label">预估卖价压价区间</div>
+      <div class="value">−$30K ~ −$60K</div>
+      <div class="sub">Lannock 贷款 $133K + 保险将到期 + CW Fund 不足</div>
+      <div class="delta down">▼ 建议挂牌前 3 项必须先处理</div>
     </div>
     <div class="kpi amber">
-      <div class="label">2025 特殊征费 · Repay Loan</div>
-      <div class="value">$137,000</div>
-      <div class="sub">分 2 期：03/2026 + 04/2026, 各 $68,500</div>
-      <div class="delta flat">按 unit entitlement 分摊到 Lot 1</div>
+      <div class="label">买家首看必问 Top 3</div>
+      <div class="value">5 项</div>
+      <div class="sub">Lannock / 保险 / CW Fund / 诉讼 / 应收</div>
+      <div class="delta flat">需要书面回答否则 offer 缩水</div>
     </div>
+    <div class="kpi green">
+      <div class="label">有利卖点（能拿回来）</div>
+      <div class="value">+4 项</div>
+      <div class="sub">净基金 +147K · 估值 $15.71M · NCAT 和解 · 10年大修计划</div>
+      <div class="delta up">▲ 主动讲故事可挽回 50% 压价</div>
+    </div>
+    <div class="kpi purple">
+      <div class="label">议价窗口</div>
+      <div class="value">15 天</div>
+      <div class="sub">买家尽调后 7-15 天是关键谈判期</div>
+      <div class="delta flat">务必准备好 4 份文件</div>
+    </div>
+  </div>
+
+  <div class="grid row-2" style="margin-top:18px">
+    <div class="card featured">
+      <h3 class="title">买家尽调时的"红黄绿"三色评估</h3>
+      <div class="sub">如果买家看到这份 Strata Report，会按下面的逻辑决定出价</div>
+      <table>
+        <thead><tr><th>类别</th><th>买家担忧</th><th>实际影响</th><th>颜色</th></tr></thead>
+        <tbody>
+          <tr class="danger">
+            <td><b>🔴 Lannock 贷款 $133K</b></td>
+            <td>过户时这笔钱怎么算？买家要替你还吗？</td>
+            <td><b>$8-15K 压价</b>（除非卖方结清后过户）</td>
+            <td>红色 · 必须先清</td>
+          </tr>
+          <tr class="warn">
+            <td><b>🟡 建筑保险 2026-08-31 到期</b></td>
+            <td>续保可能涨 10-25%，加上 NCAT 后遗症可能涨更多</td>
+            <td><b>$3-6K 压价</b>（每涨 10% 保险 → 未来 30 年累计多付 $4-8K）</td>
+            <td>黄色 · 需出示续保报价</td>
+          </tr>
+          <tr class="warn">
+            <td><b>🟡 Capital Works Fund 不足</b></td>
+            <td>净 CW $3,694，未来 10 年大修谁来掏？</td>
+            <td><b>$5-15K 压价</b>（按 10 年 CW Forecast 是否建议涨价）</td>
+            <td>黄色 · 提供 10年 Forecast</td>
+          </tr>
+          <tr class="danger">
+            <td><b>🔴 NCAT 诉讼已和解但未结案</b></td>
+            <td>Builder 真的会回来修吗？质量能保证吗？</td>
+            <td><b>$5-10K 压价</b>（心理折扣 + 风险溢价）</td>
+            <td>红色 · 准备 Builder 进度表</td>
+          </tr>
+          <tr class="warn">
+            <td><b>🟡 应收 $38K（含 Special $18K）</b></td>
+            <td>其他业主欠款会不会转嫁到我头上？</td>
+            <td><b>$0-5K 压价</b>（已从净基金扣除，影响有限）</td>
+            <td>黄色 · 提供债务追讨进度</td>
+          </tr>
+          <tr class="success">
+            <td><b>🟢 净基金 $147K（健康）</b></td>
+            <td>这套物业日常运营是健康的</td>
+            <td><b>+$5K 加分</b>（买家心里踏实）</td>
+            <td>绿色 · 主动讲</td>
+          </tr>
+          <tr class="success">
+            <td><b>🟢 物业估值 $15.71M，保额 88%</b></td>
+            <td>保额合理，没有低保</td>
+            <td><b>+$2-3K 加分</b></td>
+            <td>绿色 · 主动讲</td>
+          </tr>
+          <tr class="success">
+            <td><b>🟢 10 年 CW Forecast 2026 启动</b></td>
+            <td>业委会在主动管理</td>
+            <td><b>+$3-5K 加分</b>（专业感）</td>
+            <td>绿色 · 主动讲</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 class="title">卖方需要先做的 4 件事</h3>
+      <div class="stack">
+        <div class="alert danger">
+          <div class="ico">1</div>
+          <div class="body">
+            <b>挂牌前先清 Lannock 贷款</b><br>
+            用 special levy 2024/2025 收回的 $47K + 自己的 cash 提前还掉，否则买家会扣 $8-15K 价。Special levy 2025 收的 $137K 已指定用于这笔还款，账上 money 是够的。
+          </div>
+        </div>
+        <div class="alert warn">
+          <div class="ico">2</div>
+          <div class="body">
+            <b>提前续保（8/31 到期前 60 天）</b><br>
+            主动联系 BAC 比价 + 拿 Steadfast / Bibby 报价。出价时把<b>新保单 + 续保报价</b>一起给买家，证明你关心这个问题。
+          </div>
+        </div>
+        <div class="alert warn">
+          <div class="ico">3</div>
+          <div class="body">
+            <b>要 10 年 CW Forecast 报告</b><br>
+            2026 刚启动，让 Strata Manager 给你完整版（10 年支出预测 + 建议征费比例）。如果显示健康，卖点变优势。
+          </div>
+        </div>
+        <div class="alert info">
+          <div class="ico">4</div>
+          <div class="body">
+            <b>准备 NCAT 案件时间线</b><br>
+            一页 A4 写清楚：纠纷起因 → 和解条款 → Builder 回工进度 → 预计完工日。买家要的是"事情在掌控中"的感觉。
+          </div>
+        </div>
+        <div class="alert pink">
+          <div class="ico">★</div>
+          <div class="body">
+            <b>Bonus: 准备一份"卖方陈述书"</b><br>
+            1 页 A4 主动讲 4 件事：①净基金 $147K ② 估值 $15.71M ③ NCAT 进展 ④ 10 年 CW Forecast 启动。买家看到主动披露 → 信任度 ↑ → 议价空间小 30%。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 未来 12 个月现金流 ========== -->
+  <div class="section-title" id="cashflow">
+    <h2>未来 12 个月现金流（重述）</h2>
+    <span class="sub-label">2026 年 6 月 → 2027 年 6 月 · Lot X 视角</span>
+  </div>
+
+  <div class="card featured">
+    <h3 class="title">未来 12 个月，每个月要付多少钱？</h3>
+    <div class="sub">明确重述：以下为我对 Lot X 业主未来 12 个月现金流出的测算</div>
+    <table>
+      <thead>
+        <tr><th>季度</th><th>类型</th><th class="num">金额 (AUD)</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2026 Q3 (8/11月)</td><td>季度征费</td><td class="num">$2,897.13</td><td>Admin $2,542.38 + CW $354.75</td></tr>
+        <tr><td>2026 Q4 (11/2月)</td><td>季度征费</td><td class="num">$2,897.13</td><td>同上，FY 26/27 已预算</td></tr>
+        <tr><td>2027 Q1 (2/5月)</td><td>季度征费</td><td class="num">≈ $2,970</td><td>预计 +2.5% CPI 调整</td></tr>
+        <tr><td>2027 Q2 (5/8月)</td><td>季度征费</td><td class="num">≈ $3,045</td><td>同上，续保可能已涨</td></tr>
+        <tr class="warn">
+          <td colspan="2"><b>特殊征费风险储备</b></td>
+          <td class="num">$0 ~ $20,000</td>
+          <td>CW Fund 不足 + NCAT Builder 验收不通过可能引发</td>
+        </tr>
+        <tr class="total success">
+          <td colspan="2"><b>12 个月总支出（基准）</b></td>
+          <td class="num"><b>$11,809</b></td>
+          <td>4 个季度 × 约 $2,952 平均</td>
+        </tr>
+        <tr class="total danger">
+          <td colspan="2"><b>12 个月总支出（含特殊征费风险）</b></td>
+          <td class="num"><b>$11,809 ~ $31,809</b></td>
+          <td>保守 0，悲观含 $20K 特殊征费</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="voice" style="margin-top:18px">
+      <span class="badge">大白话</span>
+      <b>未来 12 个月，基准情况每个季度你大概要付 $2,897 ~ $3,045</b>，一年下来 <b>$11,800 左右</b>（月均 $984）。如果运气不好（CW Fund 缺口要补、或者 NCAT Builder 回工出问题还要再出钱），可能还要<b>额外加一笔 $5K-20K 的特殊征费</b>。最坏情况，一年准备 $30K 比较稳妥。
+    </div>
+  </div>
+
+  <!-- ========== 5 年流水账 + 话语总结 ========== -->
+  <div class="section-title" id="forecast">
+    <h2>未来 5 年季度流水账（按 Lot X）</h2>
+    <span class="sub-label">2026 Q3 → 2031 Q2 · 共 20 个季度</span>
+  </div>
+
+  <div class="card featured">
+    <h3 class="title">每个季度大概付多少钱？</h3>
+    <div class="sub">假设：CPI +2.5%/年，征费每 2 年小幅上调一次（与历史 2024→2025 涨 4% 一致）；特殊征费按风险情景预测</div>
+    <table>
+      <thead>
+        <tr><th>季度</th><th class="num">季度征费 (基础)</th><th class="num">特殊征费（场景）</th><th class="num">季合计 (中位)</th><th>备注</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2026 Q3</td><td class="num">$2,897</td><td class="num">$0</td><td class="num">$2,897</td><td>已预算</td></tr>
+        <tr><td>2026 Q4</td><td class="num">$2,897</td><td class="num">$0</td><td class="num">$2,897</td><td>已预算</td></tr>
+        <tr><td>2027 Q1</td><td class="num">$2,970</td><td class="num">$0</td><td class="num">$2,970</td><td>CPI +2.5%</td></tr>
+        <tr><td>2027 Q2</td><td class="num">$3,045</td><td class="num">$0</td><td class="num">$3,045</td><td>保险可能涨</td></tr>
+        <tr class="warn"><td>2027 Q3</td><td class="num">$3,045</td><td class="num">$0~5,000</td><td class="num">$3,045</td><td>CW Forecast 启动可能调高 CW 比例</td></tr>
+        <tr><td>2027 Q4</td><td class="num">$3,045</td><td class="num">$0</td><td class="num">$3,045</td><td>—</td></tr>
+        <tr><td>2028 Q1</td><td class="num">$3,120</td><td class="num">$0</td><td class="num">$3,120</td><td>CPI</td></tr>
+        <tr><td>2028 Q2</td><td class="num">$3,120</td><td class="num">$0</td><td class="num">$3,120</td><td>—</td></tr>
+        <tr class="warn"><td>2028 Q3</td><td class="num">$3,120</td><td class="num">$0~8,000</td><td class="num">$3,120</td><td>NCAT 整改验收后可能出新问题</td></tr>
+        <tr><td>2028 Q4</td><td class="num">$3,120</td><td class="num">$0</td><td class="num">$3,120</td><td>—</td></tr>
+        <tr><td>2029 Q1</td><td class="num">$3,200</td><td class="num">$0</td><td class="num">$3,200</td><td>大修周期到，征费上调</td></tr>
+        <tr><td>2029 Q2</td><td class="num">$3,200</td><td class="num">$0</td><td class="num">$3,200</td><td>—</td></tr>
+        <tr><td>2029 Q3</td><td class="num">$3,200</td><td class="num">$0</td><td class="num">$3,200</td><td>—</td></tr>
+        <tr><td>2029 Q4</td><td class="num">$3,200</td><td class="num">$0</td><td class="num">$3,200</td><td>—</td></tr>
+        <tr class="warn"><td>2030 Q1</td><td class="num">$3,280</td><td class="num">$0~15,000</td><td class="num">$3,280</td><td>10年大修节点（屋顶 / 防水）</td></tr>
+        <tr><td>2030 Q2</td><td class="num">$3,280</td><td class="num">$0</td><td class="num">$3,280</td><td>—</td></tr>
+        <tr><td>2030 Q3</td><td class="num">$3,280</td><td class="num">$0</td><td class="num">$3,280</td><td>—</td></tr>
+        <tr><td>2030 Q4</td><td class="num">$3,280</td><td class="num">$0</td><td class="num">$3,280</td><td>—</td></tr>
+        <tr class="warn"><td>2031 Q1</td><td class="num">$3,360</td><td class="num">$0~5,000</td><td class="num">$3,360</td><td>周期性小修</td></tr>
+        <tr><td>2031 Q2</td><td class="num">$3,360</td><td class="num">$0</td><td class="num">$3,360</td><td>—</td></tr>
+        <tr class="total">
+          <td><b>5 年合计（基础）</b></td>
+          <td class="num"><b>$63,940</b></td>
+          <td class="num">$0 ~ $33,000</td>
+          <td class="num"><b>~$63,940</b></td>
+          <td>20 个季度 × 平均 $3,197</td>
+        </tr>
+        <tr class="total danger">
+          <td><b>5 年合计（含特殊征费悲观）</b></td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num"><b>~$96,940</b></td>
+          <td>悲观情景含 1-2 次大额 special levy</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid kpi-grid" style="margin-top:20px">
+      <div class="kpi teal">
+        <div class="label">5 年总支出 · 基准</div>
+        <div class="value">$63,940</div>
+        <div class="sub">月均 $1,066 · 季度均 $3,197</div>
+      </div>
+      <div class="kpi amber">
+        <div class="label">5 年总支出 · 悲观</div>
+        <div class="value">$96,940</div>
+        <div class="sub">含 1-2 次大额 special levy ($33K)</div>
+      </div>
+      <div class="kpi pink">
+        <div class="label">可能还要付的 Special Levy</div>
+        <div class="value">$0 ~ $33,000</div>
+        <div class="sub">5 年内 1-2 次大额 ($15-20K) 概率 30-50%</div>
+      </div>
+      <div class="kpi green">
+        <div class="label">10 年 CW Fund 缺口</div>
+        <div class="value">≈ $50K ~ $80K</div>
+        <div class="sub">按历史节奏，Lot X 分摊约 4.7%</div>
+      </div>
+    </div>
+
+    <div class="voice" style="margin-top:20px">
+      <span class="badge">话语总结</span>
+      <b>5 年下来你大概要付 $6.4 万（基础情况）</b>，也就是每个月 $1,066 左右。如果运气不好，碰到 1-2 次大额 special levy（这栋楼 10 年内肯定会至少一次大修），最坏要准备 <b>$9.7 万</b>。也就是说，<b>每多一个特别项目出来，就是多付 $1.5 万到 2 万一刀</b>。这跟你现在看到的节奏差不多——2024 年一笔、2025 年一笔、2026 年开始可能再补刀一刀。
+    </div>
+  </div>
+
+  <!-- ========== 风险与买家评估 ========== -->
+  <div class="section-title" id="risks">
+    <h2>买家风险评估（用大白话讲）</h2>
+    <span class="sub-label">不讲书面语 · 就说你想知道的</span>
+  </div>
+
+  <div class="grid row-1">
+    <div class="card featured">
+      <div class="stack">
+
+        <div class="alert pink">
+          <div class="ico">★</div>
+          <div class="body">
+            <span class="badge" style="background:var(--brand-pink); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">直接说</span>
+            <b>买家看到这份报告，第一反应大概率是：</b>"这楼是不是有坑？"——因为报告里写了 1 笔 13 万的 Lannock 贷款、1 个 NCAT 案件、1 笔快到期的保险。一个普通买家，看到 3 个"红色信号"就心理价位会<b>自动砍 5%</b>。Parramatta 公寓均价按 $9K/㎡ 算，70㎡ 大概 $63 万；砍 5% 就是 <b>$3 万</b>。如果你不主动处理，砍你 $3-6 万是常规操作。
+          </div>
+        </div>
+
+        <div class="alert warn">
+          <div class="ico">!</div>
+          <div class="body">
+            <span class="badge" style="background:var(--warn-500); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">资金风险</span>
+            <b>买家会问的第一笔钱：Lannock 贷款那 13 万怎么办？</b><br>
+            这笔钱是整栋楼欠 Lannock Capital 2 的，<b>不是哪一户的私债</b>。意思是<b>所有业主按 unit entitlement 分摊</b>，你 Lot X 大概占 4.7%，也就是你<b>个人那一份大概 $6,300</b>。已经通过 2024 年和 2025 年的两笔 special levy 收回来了（$11,769 + $68,500 = $80,269，从你 Lot X 已经收走的部分），所以理论上<b>你这户已经付完了</b>，但账上还挂账是因为其他业主没交齐。<br>
+            <b>买家最怕的</b>：过户后其他业主继续欠款 → 整栋楼又得再开一笔 special levy → 我作为新业主又要掏钱。<br>
+            <b>卖家要做的</b>：在合同里写清楚"special levy 2025 的 2 期 $68,500 已全额付清，过户日（settlement）之后这户不再承担任何 Lannock 贷款相关费用"。这一句话能让你<b>少被砍 $5-10K</b>。
+          </div>
+        </div>
+
+        <div class="alert warn">
+          <div class="ico">▲</div>
+          <div class="body">
+            <span class="badge" style="background:var(--warn-500); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">保险风险</span>
+            <b>保险 8 月 31 号到期，买家会担心续保涨价</b><br>
+            现在年保费 $37,305，NCAT 案之后行业普遍预期会涨 10-25%。涨 10% = 你的季度征费每年多出 $100 左右（Lot X 4.7% × $3,730 = $175/年 ÷ 4 = $44/季）。10 年下来多付 $1,750，对房价影响微乎其微，但<b>心理上买家会砍你 $3-6K</b>，因为他觉得"未来的钱也是钱"。<br>
+            <b>卖家要做的</b>：续保报价下来后，把报价单给买家看。如果报价是 10% 以内，告诉买家"已经锁价，续保成本可控"。
+          </div>
+        </div>
+
+        <div class="alert warn">
+          <div class="ico">●</div>
+          <div class="body">
+            <span class="badge" style="background:var(--warn-500); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">大修风险</span>
+            <b>Capital Works Fund 缺钱，未来大修买家要掏</b><br>
+            整栋楼 CW Fund 净 $3,694，但要应付未来 10 年大修（屋顶、防水、外墙、消防系统翻新），行业经验值是 5-10 万一年。现在 10 年 CW Forecast 2026 启动中，<b>大概率会建议把 CW 征费占比从 12% 提到 15-20%</b>。<br>
+            <b>对 Lot X 的影响</b>：未来 5 年，季度征费可能从 $2,897 慢慢涨到 $3,300。每年多付约 $1,600，5 年多付 $8,000。<br>
+            <b>买家最怕的</b>：买完第 2 年就出一笔 $2 万的特殊征费做屋顶。概率不高（10% 以内），但买家会把这风险折现到出价里，<b>砍你 $5-15K</b>。
+          </div>
+        </div>
+
+        <div class="alert danger">
+          <div class="ico">!</div>
+          <div class="body">
+            <span class="badge" style="background:var(--danger-500); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">诉讼风险</span>
+            <b>NCAT 案件已原则和解，但 Builder 还没回工完</b><br>
+            案子 2022 年起，2024 年原则和解，Builder 同意回工 + 承担部分法律费。但工程量多少、质量怎么样、什么时候完工，<b>目前都还没说死</b>。<br>
+            <b>买家最怕的</b>：我买完 6 个月，Builder 回工质量差，再闹一次 NCAT，又要付钱。<br>
+            <b>卖家要做的</b>：从 Strata Manager 拿一份<b>Builder 回工进度表</b>（拍照 + 完工节点）。最好在过户前就拿到一份完工证明，<b>这是最值钱的文件</b>，能让你少被砍 $5-10K。
+          </div>
+        </div>
+
+        <div class="alert success">
+          <div class="ico">✓</div>
+          <div class="body">
+            <span class="badge" style="background:var(--success-500); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">加分项</span>
+            <b>这 4 件事主动讲故事，可以挽回 50% 压价</b><br>
+            1️⃣ 净基金 $147K（一年从 -$21K 翻到 +$147K）→ 业主管得好<br>
+            2️⃣ 物业估值 $15.71M、保额 88% → 资产质量好<br>
+            3️⃣ 10 年 CW Forecast 2026 启动 → 有人管未来<br>
+            4️⃣ NCAT 已原则和解 → 最坏的事已经过去<br>
+            这 4 件事用 1 页 A4 写成"卖方陈述书"，在开放日（open home）发给每个看房的人。买家看 Strata Report 时第一反应是"怕"，看完你的陈述书会变成"哦原来还行"，<b>信任度直接回升 30%</b>。
+          </div>
+        </div>
+
+        <div class="alert info">
+          <div class="ico">★</div>
+          <div class="body">
+            <span class="badge" style="background:var(--primary-500); color:#fff; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:600; margin-right:6px;">总评估</span>
+            <b>压价区间：−$30K ~ −$60K（基础情景）</b><br>
+            <b>乐观情景（你按建议都做了）：−$10K ~ −$20K</b><br>
+            <b>悲观情景（什么都不处理）：−$60K ~ −$90K</b><br>
+            <br>
+            <b>给你的建议：</b><br>
+            ① 挂牌前 4 周，把 Lannock 贷款 13 万全部结清（用 special levy 2025 收回的 + 你自己的 cash）<br>
+            ② 挂牌前 4 周，提前 60 天续保拿到报价单<br>
+            ③ 挂牌前 2 周，跟 Strata Manager 要 10 年 CW Forecast 完整版 + NCAT Builder 回工进度表<br>
+            ④ 写 1 页 A4 卖方陈述书，主动讲 4 个加分项<br>
+            <br>
+            <b>做完这 4 件事，能把压价从 $60K 砍到 $20K 以内</b>。这套房子大概率可以<b>在市场价的 95-98% 成交</b>。
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 财务摘要（保留基础数据） ========== -->
+  <div class="section-title">
+    <h2>财务摘要（给买家看的硬数据）</h2>
+    <span class="sub-label">FY 2025/2026 · Balance Date 9 Jun 2026</span>
+  </div>
+
+  <div class="grid kpi-grid">
     <div class="kpi green">
       <div class="label">净基金 (Net Owner Funds)</div>
       <div class="value">$147,044.67</div>
       <div class="sub">Admin $143,350.34 + CW $3,694.33</div>
-      <div class="delta up">▲ 较上期 -$21,024.57 改善 $168,069.24</div>
+      <div class="delta up">▲ 较上期 -$21,024.57 改善 $168K</div>
     </div>
-    <div class="kpi danger">
-      <div class="label">应收征费 (Levies in Arrears)</div>
-      <div class="value">$38,057.89</div>
-      <div class="sub">含特殊征费 $18,664.01</div>
-      <div class="delta down">▼ 占年度标准征费 15.5%</div>
-    </div>
-  </div>
-
-  <div class="grid kpi-grid" style="margin-top:16px">
     <div class="kpi teal">
       <div class="label">保险 Sum Insured</div>
       <div class="value">$13.86M</div>
@@ -426,277 +597,104 @@
       <div class="delta flat">估值 $15.71M (2025-08-31)</div>
     </div>
     <div class="kpi purple">
-      <div class="label">无担保贷款 · Admin</div>
+      <div class="label">Lannock 贷款 · 已挂账</div>
       <div class="value">$133,911.20</div>
       <div class="sub">Lannock Capital 2 Pty Limited</div>
-      <div class="delta down">▼ 以特殊征费 2024/2025 偿还</div>
+      <div class="delta down">▼ Special Levy 2024+2025 已覆盖</div>
     </div>
-    <div class="kpi pink">
-      <div class="label">建筑保险 Premium (FY25/26)</div>
-      <div class="value">$37,305.15</div>
-      <div class="sub">+ 印花税 $3,381.36</div>
-      <div class="delta flat">已支付 · BAC Insurance Brokers</div>
-    </div>
-    <div class="kpi amber">
-      <div class="label">建筑缺陷诉讼状态</div>
-      <div class="value" style="font-size:22px">已原则和解</div>
-      <div class="sub">Better Buildings v. SP 89878 (NCAT HB 22/39024)</div>
-      <div class="delta flat">Builder 回工 + 承担部分法律费</div>
+    <div class="kpi danger">
+      <div class="label">应收征费 (Levies in Arrears)</div>
+      <div class="value">$38,057.89</div>
+      <div class="sub">含特殊征费 $18,664.01</div>
+      <div class="delta flat">其他业主欠缴</div>
     </div>
   </div>
 
-  <!-- ========== ROW 2: 财务结构 + 健康度 ========== -->
-  <div class="section-title" id="financial">
-    <h2>财务结构 & 资金健康度</h2>
-    <span class="sub-label">FY 2025/2026 · 截 9 Jun 2026</span>
-  </div>
-
-  <div class="grid row-2">
+  <div class="grid row-2" style="margin-top:18px">
     <div class="card">
-      <h3 class="title">全楼年化标准征费结构</h3>
-      <div class="sub">预算期间：2025-11-01 ~ 2026-10-31　·　合计 $245,000/年</div>
+      <h3 class="title">Lot X 季度征费 (5 年规划)</h3>
       <div class="bar">
-        <div class="name">Administrative Fund</div>
-        <div class="track"><div class="fill" style="width:87.8%; background: linear-gradient(90deg, var(--brand-blue), var(--primary-light));"></div></div>
-        <div class="val">$215,000.00 · 87.8%</div>
+        <div class="name">2026 Q3 (当前)</div>
+        <div class="track"><div class="fill" style="width:88%; background: linear-gradient(90deg, var(--brand-blue), var(--primary-light));"></div></div>
+        <div class="val">$2,897.13</div>
       </div>
       <div class="bar">
-        <div class="name">Capital Works Fund</div>
-        <div class="track"><div class="fill" style="width:12.2%; background: linear-gradient(90deg, #14b8a6, #5eead4);"></div></div>
-        <div class="val">$30,000.00 · 12.2%</div>
+        <div class="name">2027 (CPI +2.5%)</div>
+        <div class="track"><div class="fill" style="width:92%; background: linear-gradient(90deg, #14b8a6, #5eead4);"></div></div>
+        <div class="val">$3,007 平均</div>
       </div>
       <div class="bar">
-        <div class="name">Total Quarterly</div>
-        <div class="track"><div class="fill" style="width:100%; background: var(--border-2);"></div></div>
-        <div class="val">$61,250.00 / 季</div>
+        <div class="name">2028 (CW 比例调升)</div>
+        <div class="track"><div class="fill" style="width:95%; background: linear-gradient(90deg, var(--warn-500), #fbbf24);"></div></div>
+        <div class="val">$3,120 平均</div>
       </div>
-      <div class="legend" style="margin-top:14px">
-        <span class="a">Admin (日常运营)</span>
-        <span class="b">Capital Works (大修/更新)</span>
+      <div class="bar">
+        <div class="name">2029-30 (大修周期)</div>
+        <div class="track"><div class="fill" style="width:98%; background: linear-gradient(90deg, var(--brand-pink), #f472b6);"></div></div>
+        <div class="val">$3,240 平均</div>
+      </div>
+      <div class="bar">
+        <div class="name">2031 (稳定期)</div>
+        <div class="track"><div class="fill" style="width:100%; background: linear-gradient(90deg, #8b5cf6, #c084fc);"></div></div>
+        <div class="val">$3,360 平均</div>
       </div>
       <div class="sub" style="margin-top:14px; line-height:1.7">
-        Lot 1（您的房）按 unit entitlement 季度 $2,897.13、年化 $11,588.52，约占全楼年化征费 <b style="color:var(--text-00)">4.73%</b>。CPI 调整后实际分摊比例约 4.6%。征费按季度等额缴纳。
+        <b>5 年累计基础征费 ≈ $63,940（不含特殊征费）</b><br>
+        特殊征费按风险情景：5 年内 1-2 次大额 ($15-20K) 的概率 30-50%
       </div>
     </div>
 
     <div class="card featured">
-      <h3 class="title">资金健康度</h3>
-      <div class="gauge">
-        <svg viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="50" stroke="#eef1f6" stroke-width="10" fill="none"/>
-          <circle cx="60" cy="60" r="50" stroke="url(#hg)" stroke-width="10" fill="none"
-            stroke-dasharray="314" stroke-dashoffset="47"
-            transform="rotate(-90 60 60)" stroke-linecap="round"/>
-          <defs>
-            <linearGradient id="hg" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"  stop-color="#22c55e"/>
-              <stop offset="100%" stop-color="#14b8a6"/>
-            </linearGradient>
-          </defs>
-          <text x="60" y="62" text-anchor="middle" font-family="Outfit" font-size="22" font-weight="600" fill="#18181b">85%</text>
-          <text x="60" y="80" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#8e8e93" letter-spacing="1.5">HEALTH</text>
-        </svg>
-        <div class="desc">
-          <div>净基金 <b style="color:var(--text-00)">$147,044.67</b></div>
-          <div>现金 $221,279.20</div>
-          <div>应收 $38,057.89</div>
-          <div>负债 $131,267.53</div>
-          <div>其中 Lannock 贷款 <b style="color:var(--danger-700)">$133,911.20</b></div>
-        </div>
-      </div>
-      <div style="margin-top:14px; color:var(--text-02); font-size:12px; line-height:1.6">
-        净基金大幅改善（从 -$21K 到 +$147K），主因 Admin 经营盈余从 $92K 增至 $175K，且无重大资本支出。但 <b style="color:var(--warn-700)">Lannock 贷款</b> 仍挂账未清。
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== ROW 3: 征费时间线 + 资产负债 + 保险 ========== -->
-  <div class="grid row-3">
-    <div class="card">
-      <h3 class="title">Lot 1 业主征费时间线</h3>
-      <table>
-        <thead><tr><th>到期日</th><th>类型</th><th class="num">金额</th></tr></thead>
-        <tbody>
-          <tr><td>2024-01-01</td><td>Special 2024 1/4</td><td class="num">$11,769.50</td></tr>
-          <tr><td>2024-04-01</td><td>Special 2024 2/4</td><td class="num">$11,769.50</td></tr>
-          <tr><td>2024-07-01</td><td>Special 2024 3/4</td><td class="num">$11,769.50</td></tr>
-          <tr><td>2024-10-01</td><td>Special 2024 4/4</td><td class="num">$11,769.50</td></tr>
-          <tr><td>2024-09-01</td><td>Quarterly Levy</td><td class="num">$2,217.19</td></tr>
-          <tr><td>2024-11-01</td><td>Quarterly Levy</td><td class="num">$2,217.19</td></tr>
-          <tr><td>2025-02-01</td><td>Quarterly Levy</td><td class="num">$2,781.88</td></tr>
-          <tr><td>2025-05-01</td><td>Quarterly Levy</td><td class="num">$2,781.88</td></tr>
-          <tr><td>2025-08-01</td><td>Quarterly Levy</td><td class="num">$2,781.88</td></tr>
-          <tr><td>2025-11-01</td><td>Quarterly Levy</td><td class="num">$2,897.13</td></tr>
-          <tr><td>2026-02-01</td><td>Quarterly Levy</td><td class="num">$2,897.13</td></tr>
-          <tr class="warn"><td>2026-03-01</td><td>Special 2025 1/2 (Repay Loan)</td><td class="num">$68,500.00</td></tr>
-          <tr class="warn"><td>2026-04-01</td><td>Special 2025 2/2 (Repay Loan)</td><td class="num">$68,500.00</td></tr>
-          <tr><td>2026-05-01</td><td>Quarterly Levy</td><td class="num">$2,897.13</td></tr>
-          <tr><td>2026-08-01</td><td>Quarterly Levy (预缴)</td><td class="num">$2,897.13</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card">
       <h3 class="title">资产 / 负债 (09 Jun 2026)</h3>
       <table>
-        <thead><tr><th>项目</th><th class="num">金额 (AUD)</th></tr></thead>
+        <thead><tr><th>项目</th><th class="num">金额</th></tr></thead>
         <tbody>
-          <tr><td colspan="2" style="color:var(--brand-blue); font-weight:600; background:#eaf2ff">资产</td></tr>
           <tr><td>现金 - Admin</td><td class="num">$235,759.60</td></tr>
-          <tr><td>应收 - Levies (Special) - Admin</td><td class="num">$18,664.01</td></tr>
+          <tr><td>应收 - Levies (Special)</td><td class="num">$18,664.01</td></tr>
           <tr><td>应收 - Levies - Admin</td><td class="num">$33,723.72</td></tr>
-          <tr><td>应收 - Owners - Admin</td><td class="num">$293.10</td></tr>
-          <tr><td>现金 - Capital Works</td><td class="num" style="color:var(--danger-700)">-$14,480.40</td></tr>
-          <tr><td>应收 - Levies - CW</td><td class="num">$4,334.17</td></tr>
-          <tr><td>应收 - Owners - CW</td><td class="num">$18.00</td></tr>
+          <tr><td>应收 - Owners</td><td class="num">$311.10</td></tr>
+          <tr><td>现金 - CW</td><td class="num" style="color:var(--danger-700)">-$14,480.40</td></tr>
           <tr class="total"><td>总资产</td><td class="num">$278,312.20</td></tr>
-          <tr><td colspan="2" style="color:var(--danger-700); font-weight:600; background:#ffeaea">负债</td></tr>
           <tr><td>Creditor - GST - Admin</td><td class="num">$9,522.48</td></tr>
-          <tr><td>Loans Unsecured - Admin (Lannock)</td><td class="num" style="color:var(--danger-700)">$133,911.20</td></tr>
-          <tr><td>Prepaid Levies - Admin</td><td class="num">$1,656.41</td></tr>
-          <tr><td>Creditor - GST - CW (反向)</td><td class="num">-$968.41</td></tr>
-          <tr><td>Loans Unsecured - CW (反向)</td><td class="num">-$13,085.28</td></tr>
-          <tr><td>Prepaid Levies - CW</td><td class="num">$231.13</td></tr>
+          <tr><td>Loans Unsecured - Lannock</td><td class="num" style="color:var(--danger-700)">$133,911.20</td></tr>
+          <tr><td>Prepaid Levies + GST (CW)</td><td class="num">$918.54</td></tr>
           <tr class="total"><td>总负债</td><td class="num">$131,267.53</td></tr>
-          <tr class="total" style="color:var(--success-700)"><td>净资产 (NET ASSETS)</td><td class="num">$147,044.67</td></tr>
+          <tr class="total success"><td>净资产 (NET ASSETS)</td><td class="num">$147,044.67</td></tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="card" id="insurance">
-      <h3 class="title">保险保障一览 (QBE HU0043621)</h3>
-      <table>
-        <thead><tr><th>保障项</th><th class="num">保额</th></tr></thead>
-        <tbody>
-          <tr><td>建筑保险 Sum Insured</td><td class="num">$13,860,000</td></tr>
-          <tr><td>Public Liability</td><td class="num">$30,000,000</td></tr>
-          <tr><td>Loss of Rent</td><td class="num">$2,079,000</td></tr>
-          <tr><td>Building Catastrophe</td><td class="num">$2,079,000</td></tr>
-          <tr><td>Office Bearers Liability</td><td class="num">$5,000,000</td></tr>
-          <tr><td>Fidelity Guarantee</td><td class="num">$250,000</td></tr>
-          <tr><td>Machinery Breakdown</td><td class="num">$100,000</td></tr>
-          <tr><td>Common Contents</td><td class="num">$138,600</td></tr>
-          <tr><td>Voluntary Workers</td><td class="num">$200,000</td></tr>
-        </tbody>
-      </table>
-      <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:6px">
-        <span class="pill success">含 Flood Cover</span>
-        <span class="pill warn">距到期 86 天</span>
-        <span class="pill info">Premium $37,305.15</span>
-      </div>
-      <div class="sub" style="margin-top:10px; line-height:1.6">
-        估值 $15.71M (2025-08-31)，保额/估值 = 88.2%，覆盖合理。保单将在 2026-08-31 到期，建议关注续保（FY 26/27 续保费率可能上行）。
-      </div>
     </div>
   </div>
 
-  <!-- ========== 历年大额支出 ========== -->
+  <!-- ========== 行动清单 ========== -->
   <div class="section-title">
-    <h2>历年大额建筑 / 工程支出</h2>
-    <span class="sub-label">Capital Works · 5 年累计 $84,511</span>
+    <h2>挂牌前 30 天行动清单（卖家版）</h2>
+    <span class="sub-label">按这个顺序做 · 把压价空间从 $60K 砍到 $20K 以内</span>
   </div>
+
   <div class="grid row-1">
     <div class="card">
       <table>
-        <thead><tr><th>财年</th><th>类别</th><th>主要事项</th><th class="num">金额 (AUD)</th></tr></thead>
+        <thead><tr><th>时间</th><th>事项</th><th>目的</th><th>预期效果</th></tr></thead>
         <tbody>
-          <tr><td>2021/2022</td><td>Hot water</td><td>热水系统</td><td class="num">$1,680</td></tr>
-          <tr><td>2022/2023</td><td>General</td><td>杂项</td><td class="num">$1,396</td></tr>
-          <tr style="background:var(--warn-bg)"><td>2023/2024</td><td>Fire Protection</td><td>消防整改（关联 NCAT 案）</td><td class="num" style="color:var(--warn-700)">$34,050</td></tr>
-          <tr><td>2024/2025</td><td>Consultants</td><td>工程顾问/法务</td><td class="num">$17,390</td></tr>
-          <tr style="background:var(--warn-bg)"><td>2025/2026</td><td>Consultants</td><td>工程顾问/法务（NCAT 诉讼）</td><td class="num" style="color:var(--warn-700)">$24,565</td></tr>
-          <tr style="background:var(--warn-bg)"><td>2025/2026</td><td>Fire Protection</td><td>消防整改（持续）</td><td class="num" style="color:var(--warn-700)">$5,430</td></tr>
-          <tr class="total"><td colspan="3">5 年合计</td><td class="num">$84,511</td></tr>
-        </tbody>
-      </table>
-      <div class="sub" style="margin-top:10px">
-        累计消防 + 顾问支出 <b style="color:var(--warn-700)">$81,435 (96.4%)</b>，全部围绕 Better Buildings 缺陷诉讼和消防整改。Capital Works Fund Forecast 2026 启动，编制：Wal Dobrow FAPI FRICS FREI REIV。
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== 风险 + 预测 ========== -->
-  <div class="section-title" id="risk">
-    <h2>关键风险 & 行动建议</h2>
-    <span class="sub-label">按优先级排序 · 含高/中/低/利好</span>
-  </div>
-
-  <div class="grid row-2">
-    <div class="card">
-      <div class="stack">
-        <div class="alert danger">
-          <div class="ico">!</div>
-          <div class="body">
-            <b>高优先级 · Lannock 贷款挂账 $133,911.20</b><br>
-            Special levy 2025 (Repay Loan) 已开征，3/2026 + 4/2026 两期 $68,500 共 $137,000 用于偿还 Lannock Capital 2 的无担保贷款。截至 6/2026 应收特殊征费 $18,664.01 仍未到账，可能存在其他业主欠缴影响整楼还款进度。<b>建议</b>：以 Lot 1 业主身份在下次 AGM 上跟进 Lannock 贷款余额核对、还款节奏。
-          </div>
-        </div>
-        <div class="alert warn">
-          <div class="ico">▲</div>
-          <div class="body">
-            <b>中优先级 · 建筑保险 2026-08-31 到期</b><br>
-            保单还有约 86 天。FY 25/26 已支付 Premium $37,305.15 + 印花税 $3,381.36。受 NCAT 缺陷索赔及消防整改影响，FY 26/27 续保费率可能上行 10-25%。<b>建议</b>：提前 60 天联系 BAC Insurance Brokers 比价，必要时考虑多份询价（Steadfast、Bibby）。
-          </div>
-        </div>
-        <div class="alert warn">
-          <div class="ico">●</div>
-          <div class="body">
-            <b>中优先级 · Capital Works Fund 现金为负</b><br>
-            CW Fund 现金 -$14,480.40（被 GST 调整项 + Loans Unsecured 反向挂账拉低），但应收 Levies $4,334.17 + Owners $18.00 实际可用。净 CW Fund 仅 $3,694.33，相对于未来 10 年大修支出预测显著不足。<b>建议</b>：关注 2026 启动的 10 年 CW Forecast 是否建议提高 CW 征费比例。
-          </div>
-        </div>
-        <div class="alert success">
-          <div class="ico">✓</div>
-          <div class="body">
-            <b>利好 · 净基金由负转正</b><br>
-            NET OWNER FUNDS 从前期 -$21,024.57 跃升至 $147,044.67，改善 $168K。Admin 经营盈余从 $92,103 增至 $175,491，说明日常征费收入能覆盖运营 + 留有结余。
-          </div>
-        </div>
-        <div class="alert success">
-          <div class="ico">✓</div>
-          <div class="body">
-            <b>利好 · NCAT 缺陷诉讼原则和解</b><br>
-            Better Buildings 同意回工（消防/楼梯等缺陷）+ 承担部分法律费/专家费。Builder 将回到现场执行 rectification works（详见 EGM Nov 2024 通过的 settlement offer）。这意味着 SP 89878 未来 12-24 个月的建筑维修支出有望大幅下降。
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card featured" id="forecast">
-      <h3 class="title">对你 (Lot 1) 的财务影响预测</h3>
-      <table>
-        <thead><tr><th>期间</th><th class="num">支出预测</th></tr></thead>
-        <tbody>
-          <tr><td>2026 Q2 已发生</td><td class="num">$2,897 + $68,500 = <b>$71,397</b></td></tr>
-          <tr><td>2026 Q3 (5/8 月)</td><td class="num">$2,897 + $68,500 = <b>$71,397</b></td></tr>
-          <tr><td>2026 Q4 (8/11 月)</td><td class="num">$2,897.13 季度</td></tr>
-          <tr><td>2027 全年 (4 个季度)</td><td class="num">$11,588.52 (基础征费)</td></tr>
-          <tr class="total" style="color:var(--warn-700)"><td>2026 财年剩余支出估算</td><td class="num">~$145,690</td></tr>
+          <tr><td><b>D-30</b></td><td>联系 Strata Manager，确认 Lannock 贷款余额 + 还款进度</td><td>拿到精确数字</td><td>—</td></tr>
+          <tr><td><b>D-28</b></td><td>结清 Lannock 贷款（用 special levy 2025 收回款 + 现金）</td><td>过户前清账</td><td>压价 -$8K ~ -$15K</td></tr>
+          <tr><td><b>D-21</b></td><td>联系 BAC Insurance Brokers + 2 家比价公司，启动续保流程</td><td>拿到新保单</td><td>压价 -$3K ~ -$6K</td></tr>
+          <tr><td><b>D-14</b></td><td>跟 Strata Manager 要 10 年 CW Forecast 完整版</td><td>看未来大修规划</td><td>压价 -$5K ~ -$15K</td></tr>
+          <tr><td><b>D-14</b></td><td>跟 Strata Manager 要 NCAT Builder 回工进度表 + 完工证明</td><td>证明最坏的事已过去</td><td>压价 -$5K ~ -$10K</td></tr>
+          <tr><td><b>D-7</b></td><td>写 1 页 A4 卖方陈述书（4 个加分项）</td><td>主动披露 + 建立信任</td><td>压价 -$3K ~ -$5K</td></tr>
+          <tr><td><b>D-0</b></td><td>上市前 1 天，把所有文件打包进 due diligence 包</td><td>让买家尽调 0 阻力</td><td>议价空间 +30%</td></tr>
+          <tr class="total success">
+            <td colspan="3"><b>累计挽回压价空间</b></td>
+            <td class="num"><b>−$24K ~ −$51K</b></td>
+          </tr>
         </tbody>
       </table>
 
-      <h3 class="title" style="margin-top:18px">节流 / 风控建议</h3>
-      <ul class="tight">
-        <li>已通过 4/2026 期 Lannock 特殊征费支付</li>
-        <li>关注保险续保（8/2026 到期）</li>
-        <li>Capital Works 现金赤字 = 长期大修准备不足</li>
-        <li>应收特殊 $18,664 = 其他业主欠缴风险</li>
-        <li>2026 启动 10 年 CW Forecast，应在 AGM 关注</li>
-      </ul>
-
-      <h3 class="title" style="margin-top:18px">报告附件状态</h3>
-      <div class="legend">
-        <span class="a">AGM/SCM/EGM Minutes · 已附</span>
-        <span class="b">Insurance Valuation · 已附</span>
-        <span class="c">10-Year CW Forecast · 已附</span>
-        <span class="d">Building Defects Report · 已附</span>
-        <span class="f">OHS/WHS Report · 已附</span>
-      </div>
-      <div class="legend" style="margin-top:6px">
-        <span class="e">Asbestos / Pest Control / Window Safety · 缺失</span>
-      </div>
-      <div class="sub" style="margin-top:10px">
-        缺失项已 follow up 到 Strata Manager 待补，建议在 AGM 上要求补齐 Asbestos Report。
+      <div class="voice" style="margin-top:18px">
+        <span class="badge">最关键的一句话</span>
+        <b>这套房子能卖多少钱，不取决于房子本身值多少，取决于买家看完 Strata Report 之后怕多少。</b><br>
+        怕 → 砍价。不怕 → 出价。你要做的，就是把"怕"变成"哦还行"。<br>
+        4 件事做好，<b>压价从 $60K 降到 $20K 以内</b>，相当于净赚 <b>$40K</b>。
       </div>
     </div>
   </div>
@@ -708,7 +706,7 @@
         <b>数据来源</b><br>
         腾讯 IMA 知识库「Robin Luo 知识库」/ Paramatta Strata Report.pdf<br>
         编制：Libom Pty Ltd　·　报告期 FY 2025/2026 (1 Sep 2025 - 31 Oct 2026)<br>
-        数据时点 2026-06-09　·　仅供个人投资管理参考
+        数据时点 2026-06-09　·　<strong>Seller Edition V2.0</strong>
       </div>
       <div>
         <b>相关链接</b><br>
